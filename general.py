@@ -1,30 +1,28 @@
 import os
 
-def create_project(directory):
+def create_project_dir(directory):
     if not os.path.exists(directory):
         print ('Creating project: ' + directory)
         os.makedirs(directory)
 
-def create_files(project_name, starter_url):
-    not_crawled = project_name + '/uncrawled.txt'
-    crawled = project name + '/crawled.txt'
-    if not os.path.isfile(not_crawled):
-        write_file(not_crawled, starter_url)
+def create_data_files(project_name, starter_url):
+    queue = project_name + '/queue.txt'
+    crawled = project_name + '/crawled.txt'
+    if not os.path.isfile(queue):
+        write_file(queue, starter_url)
     if not os.path.isfile(crawled):
         write_file(crawled, '')
 
 def write_file(path, data):
-    f = open(path, 'w')
-    f.write(data)
-    f.close()
+    with open(path, 'w') as f:
+        f.write(data)
 
-def append_file(path, data):
+def append_to_file(path, data):
     with open(path, 'a') as file:
         file.write(data + '\n')
 
-def delete_file(path):
-    with open(path, 'w'):
-        pass
+def delete_file_contents(path):
+    open(path, 'w').close()
 
 def file_to_set(file_name):
     results = set()
@@ -33,7 +31,7 @@ def file_to_set(file_name):
             results.add(line.replace('\n', ''))
     return results
 
-def set_to_file(links, file):
-    delete_file(file)
-    for link in sorted(links):
-        append_file(file, link)
+def set_to_file(links, file_name):
+    with open(file_name, 'w') as f:
+        for l in sorted(links):
+            f.write(l + '\n')

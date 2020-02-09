@@ -3,10 +3,6 @@ from urllib import parse
 
 class LinkFinder(HTMLParser):
 
-    # required by HTMLParser
-    def error(self, message):
-        pass
-
     def __init__(self, base_url, page_url):
         super().__init__()
         self.base_url = base_url
@@ -22,3 +18,7 @@ class LinkFinder(HTMLParser):
 
     def page_links(self):
         return self.links
+
+    # required by HTMLParser
+    def error(self, message):
+        pass
